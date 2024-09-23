@@ -6,6 +6,9 @@ use Illuminate\Support\Facades\Route;
 
 
 Route::post('/estudante', [CadastroController::class, 'store']);
+Route::get('/estudante/{id}', [CadastroController::class, 'show']);
+Route::get('/estudante/{id}', [CadastroController::class, 'exibirEstudante']);
+Route::put('/estudante/{id}', [CadastroController::class, 'update']);
 
 
 

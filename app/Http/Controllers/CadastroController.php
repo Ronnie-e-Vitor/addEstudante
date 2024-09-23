@@ -36,7 +36,24 @@ class CadastroController extends Controller
      */
     public function show(string $id)
     {
-        //
+        $students = Student::get()->toJson(JSON_PRETTY_PRINT);
+        return response($students, 200);
+    }
+
+    public function exibirEstudante($id){
+        if(Student::where('id', $id)->exists()){
+            $students = Student::where('id', $id)->get()->toJson(JSON_PRETTY_PRINT);
+            return response($students, 200);
+
+        }else {
+            return response()->json([
+                "message" => "Student not found"
+            ],404);
+
+        }
+
+
+
     }
 
     /**
@@ -44,7 +61,22 @@ class CadastroController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        if (Student::where('id', $id)->exists()) {
+            $student = Student::find($id);
+            $student->nome = is_null($request->nome) ? $student->nome: $request->nome;
+            $student->curso = is_null($request->curso) ? $student->curso: $request->curso;
+            $student->save();
+
+            return response()->json([
+                "message" => "dados atualizados"
+            ], 200);
+
+
+        }else{
+            return response()->json([
+                "message" => "estudasnte nao enconrado"
+            ], 404);
+        }
     }
 
     /**
