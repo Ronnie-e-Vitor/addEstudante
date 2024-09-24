@@ -84,6 +84,19 @@ class CadastroController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        if(Student::where('id', $id)->exists()){
+            $student = Student::find($id);
+            $student->delete();
+
+            return response()->json([
+                "message" => "dados apagados"
+            ], 202);
+        }else{
+            return response()->json([
+                "message" => "Estudante não encontrado"
+            ], 404);
+        }
+
+
     }
 }
